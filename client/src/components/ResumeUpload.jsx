@@ -38,7 +38,8 @@ const ResumeUpload = ({ onJobsFetched }) => {
 
             const jobData = res.data.data.jobResp
             const fetchedJobs = jobData.jobs || []
-            const role = jobData.predictedRole?.toUpperCase()
+            const role = res.data.data.predictedRole?.toUpperCase()
+            console.log("🚀 ~ handleUpload ~ role:", role)
 
             console.log("🚀 ~ handleUpload ~ res.data?.data?.jobResp.jobs:", res.data?.data?.jobResp.jobs)
 
@@ -117,7 +118,7 @@ const ResumeUpload = ({ onJobsFetched }) => {
             { console.log("🚀 ~ ResumeUpload ~ predictedRole:", predictedRole) }
             {predictedRole && (
                 <div className="mt-6">
-                    <h3 className="text-lg font-medium text-green-700">
+                    <h3 className="text-lg font-medium text-black-700">
                         Predicted Role: {predictedRole}
                     </h3>
                 </div>
