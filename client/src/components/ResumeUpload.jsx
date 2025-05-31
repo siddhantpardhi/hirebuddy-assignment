@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react"
 import axios from "axios"
+import { backendURL } from "../constants"
 
 const ResumeUpload = ({ onJobsFetched }) => {
     const [file, setFile] = useState(null)
@@ -30,7 +31,7 @@ const ResumeUpload = ({ onJobsFetched }) => {
         setHasMoreJobs(false)
 
         try {
-            const res = await axios.post("http://localhost:3000/api/v1/jobs/resume", formData, {
+            const res = await axios.post(`${backendURL}/api/v1/jobs/resume`, formData, {
                 headers: { "Content-Type": "multipart/form-data" }
             })
             console.log("🚀 ~ handleUpload ~ res:", res)
@@ -63,7 +64,7 @@ const ResumeUpload = ({ onJobsFetched }) => {
         console.log("🚀 ~ loadMoreJobs ~ formDataRef.current:", formDataRef.current)
         try {
             const res = await axios.post(
-                `http://localhost:3000/api/v1/jobs/resume?page=${nextPage}`,
+                `${backendURL}/api/v1/jobs/resume?page=${nextPage}`,
                 formDataRef.current
             )
 

@@ -4,13 +4,16 @@ import WelcomeBanner from './components/WelcomeBanner.jsx'
 import SearchBar from './components/SearchBar.jsx'
 import ResumeUpload from './components/ResumeUpload.jsx'
 import JobCard from './components/JobCard.jsx'
+import { backendURL } from './constants.js'
 
+console.log("🚀 ~ backendURL:", backendURL)
 
 function App() {
   const [jobs, setJobs] = useState([])
   const handleSearch = async ({ query, location, source }) => {
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/jobs/search", {
+      
+      const res = await axios.get(`${backendURL}/api/v1/jobs/search`, {
         params: {
           query,
           location,

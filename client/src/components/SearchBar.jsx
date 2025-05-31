@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Select from "react-select"
 import axios from "axios"
+import { backendURL } from "../constants"
 
 export default function SearchBar({ onSearch }) {
     const [query, setQuery] = useState("")
@@ -12,7 +13,7 @@ export default function SearchBar({ onSearch }) {
     useEffect(() => {
         const fetchFilterData = async () => {
             try {
-                const { data } = await axios.get("http://localhost:3000/api/v1/meta/filters")
+                const { data } = await axios.get(`${backendURL}/api/v1/meta/filters`)
                 console.log("🚀 ~ fetchFilterData ~ data:", data)
                 setLocationOptions(
                     data.data.location.map((loc) => ({ value: loc, label: loc }))
