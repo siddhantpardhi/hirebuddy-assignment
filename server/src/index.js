@@ -24,8 +24,7 @@ app.use(cors({
       }
     },
     credentials: true
-  }));
-
+  }))
 
 // Routes Declaration
 import jobRouter from './routes/job.route.js'

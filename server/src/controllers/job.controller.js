@@ -5,12 +5,19 @@ import redisClient from "../utils/redisClient.js"
 import { predictJobRole } from "../utils/predictJobRole.js"
 import { extractTextFromPdf } from "../utils/extractText.js"
 import fs from "fs"
+import { string } from "cohere-ai/core/schemas/index.js"
 
 export const searchJobs = async (req, res) => {
-    const { query, location, source, page = 1 } = req.query
+    const { query, location, source, page } = req.query
+
+    if(typeof query !== "string" || typeof location !== string || typeof source !== "string") {
+        throw new ApiError(400, "Incorrect Data Type")
+    }
+
+    const parsedPage= Math.max(parseInt(page) || 0, 1)
     console.log("🚀 ~ searchJobs ~ req.query.page:", req.query.page)
     const pageSize = 10
-    const cacheKey = `search:${query || ''}:${location || ''}:${source || ''}:page${page}`
+    const cacheKey = `search:${query || ''}:${location || ''}:${source || ''}:page${parsedPage}`
     
     try {
         // Check cache
@@ -41,7 +48,7 @@ export const searchJobs = async (req, res) => {
                 $facet: {
                     results: [
                         { $sort: query ? { score: { $meta: "textScore" } } : { _id: -1 } },
-                        { $skip: (page - 1) * pageSize },
+                        { $skip: (parsedPage - 1) * pageSize },
                         { $limit: pageSize }
                     ],
                     totalCount: [
