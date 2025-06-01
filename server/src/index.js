@@ -30,7 +30,9 @@ app.use(cors({
 // Routes Declaration
 import jobRouter from './routes/job.route.js'
 import metaRouter from './routes/meta.route.js'
+import healthRouter from './routes/health.route.js'
 
+app.use('/api/v1', healthRouter)
 app.use('/api/v1/jobs', jobRouter)
 app.use('/api/v1/meta', metaRouter)
 
