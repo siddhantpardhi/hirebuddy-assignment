@@ -10,7 +10,7 @@ import { string } from "cohere-ai/core/schemas/index.js"
 export const searchJobs = async (req, res) => {
     const { query, location, source, page } = req.query
 
-    if(typeof query !== "string" || typeof location !== string || typeof source !== "string") {
+    if(typeof query !== "string" || typeof location !== "string" || typeof source !== "string") {
         throw new ApiError(400, "Incorrect Data Type")
     }
 
