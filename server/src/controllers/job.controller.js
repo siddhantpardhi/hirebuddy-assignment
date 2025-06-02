@@ -5,12 +5,11 @@ import redisClient from "../utils/redisClient.js"
 import { predictJobRole } from "../utils/predictJobRole.js"
 import { extractTextFromPdf } from "../utils/extractText.js"
 import fs from "fs"
-import { string } from "cohere-ai/core/schemas/index.js"
 
 export const searchJobs = async (req, res) => {
     const { query, location, source, page } = req.query
 
-    if(typeof query !== "string" || typeof location !== "string" || typeof source !== "string") {
+    if(( query && typeof query !== "string") || (location && typeof location !== "string") || (source && typeof source !== "string")) {
         throw new ApiError(400, "Incorrect Data Type")
     }
 
@@ -94,7 +93,7 @@ export const uploadResume = async (req, res) => {
         const predictedRole = await predictJobRole(resumeText)
         console.timeEnd("Predict Job Role")
 
-        // console.log("🚀 ~ uploadResume ~ predictedRole:", predictedRole)
+        console.log("🚀 ~ uploadResume ~ predictedRole:", predictedRole)
 
         fs.unlink(pdfPath, err => {
             if (err) console.error("Failed to delete resume:", err)
